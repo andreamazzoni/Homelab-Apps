@@ -1,0 +1,22 @@
+networks:
+  forgejo:
+    external: false
+
+services:
+  server:
+    image: codeberg.org/forgejo/forgejo:11
+    container_name: forgejo
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - FORGEJO__server__ROOT_URL=https://forgejo.andreamazzoni.me
+    restart: unless-stopped
+    networks:
+      - forgejo
+    volumes:
+      - ${DATA_DIR}:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - '3000:3000'
+      - '222:22'
